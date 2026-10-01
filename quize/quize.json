@@ -1,0 +1,282 @@
+[
+{
+"id": 1,
+"category": "Elasticity & Materials",
+"difficulty": "Easy",
+"question": "Why is prestressed concrete with steel rods under tension used in structural engineering beams?",
+"options": [
+{ "id": "A", "text": "Because concrete withstands tensile stress much better than compressive stress." },
+{ "id": "B", "text": "Because concrete is weak under tension but exceptionally strong under compression." },
+{ "id": "C", "text": "To reduce the shear modulus of the structure to zero." },
+{ "id": "D", "text": "Because steel rods eliminate thermal expansion completely." }
+],
+"correctAnswer": "B",
+"explanation": "Concrete has high compressive strength but relatively low tensile strength. Pre-tensioned steel rods induce a permanent compressive stress that offsets the tensile forces from structural loads."
+},
+{
+"id": 2,
+"category": "Dimensional Analysis",
+"difficulty": "Medium",
+"question": "For uniform circular acceleration given by a = k * r^n * v^m, what are the exponent values for dimensional consistency?",
+"options": [
+{ "id": "A", "text": "n = 1, m = 1" },
+{ "id": "B", "text": "n = -1, m = 2" },
+{ "id": "C", "text": "n = 2, m = -1" },
+{ "id": "D", "text": "n = -2, m = 2" }
+],
+"correctAnswer": "B",
+"explanation": "Using dimensions: [a] = L T^-2, [r] = L, [v] = L T^-1. [L T^-2] = L^n * (L T^-1)^m = L^(n+m) * T^-m. Equating exponents gives -m = -2 => m = 2, and n + m = 1 => n = -1. Thus, a = v^2 / r."
+},
+{
+"id": 3,
+"category": "Elasticity & Materials",
+"difficulty": "Medium",
+"question": "What does Hooke's Law state within the elastic limit of a material?",
+"options": [
+{ "id": "A", "text": "Stress is inversely proportional to strain." },
+{ "id": "B", "text": "Stress is directly proportional to strain." },
+{ "id": "C", "text": "Strain is independent of stress." },
+{ "id": "D", "text": "Stress equals force times area." }
+],
+"correctAnswer": "B",
+"explanation": "Hooke's Law states that within the elastic limit, stress is directly proportional to strain (Stress = Modulus of Elasticity * Strain)."
+},
+{
+"id": 4,
+"category": "Elasticity & Materials",
+"difficulty": "Hard",
+"question": "A steel wire of length L and cross-sectional area A stretches by ΔL under force F. What is the strain in the wire?",
+"options": [
+{ "id": "A", "text": "F / A" },
+{ "id": "B", "text": "ΔL / L" },
+{ "id": "C", "text": "L / ΔL" },
+{ "id": "D", "text": "F * L / A" }
+],
+"correctAnswer": "B",
+"explanation": "Tensile strain is defined as the fractional change in length, which is deformation (ΔL) divided by original length (L)."
+},
+{
+"id": 5,
+"category": "Elasticity & Materials",
+"difficulty": "Medium",
+"question": "Which elasticity modulus measures a material's resistance to change in volume under uniform pressure?",
+"options": [
+{ "id": "A", "text": "Young's Modulus" },
+{ "id": "B", "text": "Shear Modulus" },
+{ "id": "C", "text": "Bulk Modulus" },
+{ "id": "D", "text": "Poisson's Ratio" }
+],
+"correctAnswer": "C",
+"explanation": "Bulk Modulus (B) measures a material's resistance to uniform compression and volumetric change under pressure."
+},
+{
+"id": 6,
+"category": "Dimensional Analysis",
+"difficulty": "Easy",
+"question": "What are the SI base dimensions for pressure?",
+"options": [
+{ "id": "A", "text": "M L T^-2" },
+{ "id": "B", "text": "M L^-1 T^-2" },
+{ "id": "C", "text": "M L^2 T^-2" },
+{ "id": "D", "text": "M L^-2 T^-1" }
+],
+"correctAnswer": "B",
+"explanation": "Pressure = Force / Area = (M L T^-2) / (L^2) = M L^-1 T^-2."
+},
+{
+"id": 7,
+"category": "Elasticity & Materials",
+"difficulty": "Easy",
+"question": "What is the SI unit for stress?",
+"options": [
+{ "id": "A", "text": "Joule (J)" },
+{ "id": "B", "text": "Pascal (Pa) or N/m²" },
+{ "id": "C", "text": "Newton (N)" },
+{ "id": "D", "text": "Watt (W)" }
+],
+"correctAnswer": "B",
+"explanation": "Stress is force per unit area (F/A), measured in Newtons per square meter (N/m²), which is equal to Pascals (Pa)."
+},
+{
+"id": 8,
+"category": "Dimensional Analysis",
+"difficulty": "Medium",
+"question": "Which of the following physical quantities is dimensionless?",
+"options": [
+{ "id": "A", "text": "Young's Modulus" },
+{ "id": "B", "text": "Strain" },
+{ "id": "C", "text": "Stress" },
+{ "id": "D", "text": "Surface Tension" }
+],
+"correctAnswer": "B",
+"explanation": "Strain is the ratio of two similar quantities (change in length / original length), making it a dimensionless quantity."
+},
+{
+"id": 9,
+"category": "Elasticity & Materials",
+"difficulty": "Medium",
+"question": "What is Poisson's ratio defined as?",
+"options": [
+{ "id": "A", "text": "Longitudinal strain / Lateral strain" },
+{ "id": "B", "text": "Lateral strain / Longitudinal strain" },
+{ "id": "C", "text": "Volumetric strain / Shear strain" },
+{ "id": "D", "text": "Stress / Strain" }
+],
+"correctAnswer": "B",
+"explanation": "Poisson's ratio (ν) is the negative ratio of transverse (lateral) strain to axial (longitudinal) strain."
+},
+{
+"id": 10,
+"category": "Elasticity & Materials",
+"difficulty": "Hard",
+"question": "How much elastic potential energy per unit volume (energy density) is stored in a deformed wire?",
+"options": [
+{ "id": "A", "text": "Stress * Strain" },
+{ "id": "B", "text": "0.5 * Stress * Strain" },
+{ "id": "C", "text": "2 * Stress * Strain" },
+{ "id": "D", "text": "0.5 * Force * Length" }
+],
+"correctAnswer": "B",
+"explanation": "Energy Density = (1/2) * Stress * Strain = (1/2) * Young's Modulus * (Strain)^2."
+},
+{
+"id": 11,
+"category": "Dimensional Analysis",
+"difficulty": "Medium",
+"question": "What are the dimensions of Work and Energy?",
+"options": [
+{ "id": "A", "text": "M L T^-1" },
+{ "id": "B", "text": "M L^2 T^-2" },
+{ "id": "C", "text": "M L^-1 T^-2" },
+{ "id": "D", "text": "M L^2 T^-1" }
+],
+"correctAnswer": "B",
+"explanation": "Work = Force * Distance = (M L T^-2) * L = M L^2 T^-2."
+},
+{
+"id": 12,
+"category": "Fluid Mechanics",
+"difficulty": "Easy",
+"question": "According to Pascal's principle, pressure applied to an enclosed fluid is transmitted:",
+"options": [
+{ "id": "A", "text": "Only in the direction of the force." },
+{ "id": "B", "text": "Undiminished to every portion of the fluid and walls of the container." },
+{ "id": "C", "text": "Mostly to the bottom of the vessel." },
+{ "id": "D", "text": "Proportional to the square of fluid density." }
+],
+"correctAnswer": "B",
+"explanation": "Pascal's law states that external pressure applied to a confined fluid is transmitted equally throughout the entire fluid."
+},
+{
+"id": 13,
+"category": "Fluid Mechanics",
+"difficulty": "Medium",
+"question": "What condition must be met for Bernoulli's equation to hold true?",
+"options": [
+{ "id": "A", "text": "The fluid must be compressible and turbulent." },
+{ "id": "B", "text": "The fluid must be incompressible, non-viscous, and flow in a streamline." },
+{ "id": "C", "text": "The flow must be rotational." },
+{ "id": "D", "text": "Temperature must increase along the flow." }
+],
+"correctAnswer": "B",
+"explanation": "Bernoulli's equation applies strictly to ideal fluid flow: incompressible, non-viscous, steady, and laminar (streamline) flow."
+},
+{
+"id": 14,
+"category": "Thermal Properties",
+"difficulty": "Medium",
+"question": "If a rod of length L0 is heated by temperature ΔT, what is the formula for its thermal expansion ΔL?",
+"options": [
+{ "id": "A", "text": "ΔL = α * L0 * ΔT" },
+{ "id": "B", "text": "ΔL = α * L0 / ΔT" },
+{ "id": "C", "text": "ΔL = α / (L0 * ΔT)" },
+{ "id": "D", "text": "ΔL = L0 * ΔT" }
+],
+"correctAnswer": "A",
+"explanation": "Thermal linear expansion is calculated as ΔL = α * L0 * ΔT, where α is the coefficient of linear expansion."
+},
+{
+"id": 15,
+"category": "Dimensional Analysis",
+"difficulty": "Hard",
+"question": "What are the physical dimensions of the dynamic viscosity coefficient (η)?",
+"options": [
+{ "id": "A", "text": "M L^-1 T^-1" },
+{ "id": "B", "text": "M L T^-2" },
+{ "id": "C", "text": "M L^2 T^-1" },
+{ "id": "D", "text": "M L^-2 T^-2" }
+],
+"correctAnswer": "A",
+"explanation": "Viscous force F = η * A * (dv/dx) => [η] = [F] / ([A] * [dv/dx]) = (M L T^-2) / (L^2 * T^-1) = M L^-1 T^-1."
+},
+{
+"id": 16,
+"category": "Elasticity & Materials",
+"difficulty": "Easy",
+"question": "The point on a stress-strain curve beyond which permanent deformation occurs is called the:",
+"options": [
+{ "id": "A", "text": "Proportional limit" },
+{ "id": "B", "text": "Yield point (Elastic limit)" },
+{ "id": "C", "text": "Fracture point" },
+{ "id": "D", "text": "Ultimate strength" }
+],
+"correctAnswer": "B",
+"explanation": "Beyond the elastic limit (yield point), the material loses its elasticity and exhibits plastic (permanent) deformation."
+},
+{
+"id": 17,
+"category": "Dimensional Analysis",
+"difficulty": "Medium",
+"question": "What is the dimension of power?",
+"options": [
+{ "id": "A", "text": "M L^2 T^-2" },
+{ "id": "B", "text": "M L^2 T^-3" },
+{ "id": "C", "text": "M L T^-3" },
+{ "id": "D", "text": "M L^-1 T^-3" }
+],
+"correctAnswer": "B",
+"explanation": "Power = Work / Time = (M L^2 T^-2) / T = M L^2 T^-3."
+},
+{
+"id": 18,
+"category": "Fluid Mechanics",
+"difficulty": "Hard",
+"question": "According to the continuity equation (A1 * v1 = A2 * v2) for incompressible fluids, when a pipe narrows:",
+"options": [
+{ "id": "A", "text": "Fluid velocity decreases." },
+{ "id": "B", "text": "Fluid velocity increases." },
+{ "id": "C", "text": "Fluid density doubles." },
+{ "id": "D", "text": "Mass flow rate drops." }
+],
+"correctAnswer": "B",
+"explanation": "Since cross-sectional area A decreased, velocity v must increase to maintain a constant volume flow rate (A * v = constant)."
+},
+{
+"id": 19,
+"category": "Elasticity & Materials",
+"difficulty": "Medium",
+"question": "Shear modulus (G) is defined as the ratio of:",
+"options": [
+{ "id": "A", "text": "Tensile stress to tensile strain" },
+{ "id": "B", "text": "Shear stress to shear strain" },
+{ "id": "C", "text": "Volumetric stress to volumetric strain" },
+{ "id": "D", "text": "Compressive stress to lateral strain" }
+],
+"correctAnswer": "B",
+"explanation": "Shear modulus measures rigidity and is calculated as Shear Stress divided by Shear Strain."
+},
+{
+"id": 20,
+"category": "Dimensional Analysis",
+"difficulty": "Hard",
+"question": "If speed of light c, gravitational constant G, and Planck's constant h are chosen as fundamental units, what is the dimension of Planck length?",
+"options": [
+{ "id": "A", "text": "sqrt(G * h / c^3)" },
+{ "id": "B", "text": "G * h / c^2" },
+{ "id": "C", "text": "sqrt(c^3 / (G * h))" },
+{ "id": "D", "text": "G * c / h" }
+],
+"correctAnswer": "A",
+"explanation": "By dimensional matching for length [L], the Planck length formula is L_p = sqrt(hbar * G / c^3)."
+}
+]

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جامعة سوهاج - منصة الاختبارات الإلكترونية - الفيزياء 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1d4ed8',
+                            hoverBlue: '#1e40af',
+                            green: '#16a34a',
+                            darkBg: '#09090b',
+                            darkCard: '#141417',
+                            darkBorder: '#27272a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        code: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Light / Dark Mode Pure CSS Base Setup */
+        html.light body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        html.dark body {
+            background-color: #09090b;
+            color: #f8fafc;
+        }
+
+        .academic-card {
+            transition: all 0.2s ease-in-out;
+        }
+        html.light .academic-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        html.dark .academic-card {
+            background-color: #141417;
+            border: 1px solid #27272a;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Option Item Selection Logic */
+        .option-item {
+            transition: all 0.15s ease;
+        }
+        
+        /* Unselected Light / Dark */
+        html.light .option-item {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #1e293b;
+        }
+        html.dark .option-item {
+            background-color: #18181b;
+            border: 1px solid #27272a;
+            color: #f4f4f5;
+        }
+
+        /* Selected State (Blue) */
+        .option-item.selected {
+            border-color: #2563eb !important;
+            background-color: rgba(37, 99, 235, 0.08) !important;
+        }
+        html.dark .option-item.selected {
+            border-color: #3b82f6 !important;
+            background-color: rgba(59, 130, 246, 0.15) !important;
+        }
+
+        /* Correct Review State (Green) */
+        .option-item.correct-review {
+            border-color: #16a34a !important;
+            background-color: rgba(22, 163, 74, 0.1) !important;
+            color: #15803d !important;
+        }
+        html.dark .option-item.correct-review {
+            border-color: #22c55e !important;
+            background-color: rgba(34, 197, 94, 0.15) !important;
+            color: #4ade80 !important;
+        }
+
+        /* Incorrect Review State */
+        .option-item.wrong-review {
+            border-color: #dc2626 !important;
+            background-color: rgba(220, 38, 38, 0.08) !important;
+            color: #b91c1c !important;
+        }
+        html.dark .option-item.wrong-review {
+            border-color: #ef4444 !important;
+            background-color: rgba(239, 68, 68, 0.15) !important;
+            color: #fca5a5 !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 3px;
+        }
+        html.dark ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+    <header class="academic-card border-b sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <!-- University & Course Header -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="text-sm md:text-base font-bold leading-tight flex items-center gap-2">
+                        <span>جامعة سوهاج - كلية الهندسة</span>
+                        <span class="text-[11px] bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 font-code px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800">Physics I</span>
+                    </h1>
+                    <p class="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                        أستاذ المادة: <span class="font-semibold text-slate-700 dark:text-zinc-200">د. إسلام محمد الشيخ علي</span>
+                        <span class="mx-1">•</span>
+                        إعداد الطالب: <span class="font-semibold text-slate-700 dark:text-zinc-200">أحمد (Ahmed)</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Header Controls & Timer -->
+            <div class="flex items-center gap-3">
+                <div id="header-timer" class="hidden items-center gap-2 bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 px-3 py-1.5 rounded-md font-code">
+                    <i class="fa-regular fa-clock text-blue-600 dark:text-blue-400"></i>
+                    <span id="timer-display" class="text-sm font-bold text-slate-800 dark:text-zinc-100">30:00</span>
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" class="p-2 rounded-lg border border-slate-300 dark:border-zinc-700 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 transition" title="تبديل النمط (فاتح / داكن)">
+                    <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto w-full p-4 md:p-6 flex-grow flex flex-col justify-center">
+
+        <!-- 1. START SCREEN -->
+        <section id="start-screen" class="academic-card rounded-xl p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-200 dark:border-zinc-800 pb-4">
+                <span class="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 px-2.5 py-1 rounded">
+                    البوابة الإلكترونية للامتحانات - Exam Portal 2026
+                </span>
+                <h2 class="text-xl md:text-2xl font-bold mt-3">اختبار مادة الفيزياء الهندسية 1 (Physics I Examination)</h2>
+                <p class="text-xs md:text-sm text-slate-600 dark:text-zinc-400 mt-1">
+                    اختبار شامِل ومُقيَّم يحتوي على 20 سؤالاً باللغة الإنجليزية في موضوعات وحدات القياس، التحليل البُعدي، وإجهادات وخواص المواد المرنة.
+                </p>
+            </div>
+
+            <!-- Details Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs md:text-sm">
+                <div class="p-4 rounded-lg bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800">
+                    <span class="text-slate-500 dark:text-zinc-400 block mb-1">مدة الاختبار:</span>
+                    <span class="font-bold font-code text-blue-600 dark:text-blue-400 text-base">30:00 دقيقة</span>
+                </div>
+                <div class="p-4 rounded-lg bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800">
+                    <span class="text-slate-500 dark:text-zinc-400 block mb-1">عدد الأسئلة:</span>
+                    <span class="font-bold text-slate-800 dark:text-zinc-200 text-base">20 سؤال MCQ</span>
+                </div>
+                <div class="p-4 rounded-lg bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800">
+                    <span class="text-slate-500 dark:text-zinc-400 block mb-1">الكلية والفرقة:</span>
+                    <span class="font-bold text-slate-800 dark:text-zinc-200">هندسة سوهاج - الفرقة الأولى</span>
+                </div>
+            </div>
+
+            <!-- Rules -->
+            <div class="p-4 rounded-lg bg-slate-100 dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 text-xs space-y-2 text-slate-700 dark:text-zinc-300">
+                <div class="font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5 text-sm">
+                    <i class="fa-solid fa-circle-info"></i> تعليمات وأحكام الامتحان:
+                </div>
+                <p>1. الأسئلة مصممة باللغة الإنجليزية بالكامل وتتدرج من السهل إلى المتقدم.</p>
+                <p>2. يمكنك التنقل الحر بين الأسئلة العشرين ومراجعتها قبل التسليم النهائى.</p>
+                <p>3. يتيح لك النظام تقريراً فورياً يتضمن درجتك الكلية، نقاط القوة والضعف، والحلول النموذجية الموضحة.</p>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200 dark:border-zinc-800">
+                <div class="text-xs text-slate-500 dark:text-zinc-400">
+                    <i class="fa-solid fa-code text-blue-600 ml-1"></i>
+                    تطوير الطالب: <span class="font-bold text-slate-800 dark:text-zinc-200">أحمد (Ahmed)</span>
+                </div>
+                <button onclick="startExam()" class="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-lg shadow transition flex items-center justify-center gap-2">
+                    <span>ابدأ الاختبار الآن</span>
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. EXAM INTERFACE SCREEN -->
+        <section id="exam-screen" class="hidden space-y-4">
+            
+            <!-- Question Stepper / Navigator Grid -->
+            <div class="academic-card p-3 rounded-lg overflow-x-auto">
+                <div class="flex items-center justify-between gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-500 dark:text-zinc-400">فهرس الأسئلة (Question Stepper):</span>
+                    <span class="text-xs font-code font-bold text-blue-600 dark:text-blue-400">
+                        سؤال <span id="current-q-num">1</span> من 20
+                    </span>
+                </div>
+                <div id="stepper-grid" class="flex items-center gap-1.5 overflow-x-auto pb-1">
+                    <!-- Dynamic Stepper Buttons injected via JS -->
+                </div>
+            </div>
+
+            <!-- Current Question Card -->
+            <div class="academic-card rounded-xl p-5 md:p-6 space-y-6">
+                <!-- Category & Difficulty -->
+                <div class="flex flex-wrap justify-between items-center gap-2 pb-3 border-b border-slate-200 dark:border-zinc-800 text-xs">
+                    <span id="q-category" class="font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 px-2.5 py-1 rounded">
+                        Category
+                    </span>
+                    <span id="q-difficulty" class="font-code font-semibold text-slate-600 dark:text-zinc-400 bg-slate-100 dark:bg-zinc-800 px-2.5 py-1 rounded border border-slate-200 dark:border-zinc-700">
+                        Difficulty
+                    </span>
+                </div>
+
+                <!-- English Question Text -->
+                <div>
+                    <h3 id="q-text" class="text-base md:text-lg font-bold font-code text-slate-900 dark:text-white dir-ltr text-left leading-relaxed"></h3>
+                </div>
+
+                <!-- Answer Options (English) -->
+                <div id="options-container" class="space-y-3 dir-ltr text-left">
+                    <!-- Options injected via JS -->
+                </div>
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div class="flex justify-between items-center gap-4 pt-1">
+                <button id="prev-btn" onclick="navigateQ(-1)" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 text-xs font-bold rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-right ml-1"></i> السؤال السابق
+                </button>
+                
+                <button onclick="submitExamPrompt()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow transition">
+                    <i class="fa-solid fa-paper-plane ml-1"></i> إنهاء وتصحيح الاختبار
+                </button>
+
+                <button id="next-btn" onclick="navigateQ(1)" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow transition">
+                    السؤال التالي <i class="fa-solid fa-chevron-left mr-1"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. EVALUATION & RESULT REPORT SCREEN -->
+        <section id="result-screen" class="hidden space-y-6">
+            
+            <!-- Result Score Card -->
+            <div class="academic-card rounded-xl p-6 text-center space-y-3">
+                <span id="score-badge" class="inline-block px-3 py-1 rounded text-xs font-bold font-code">
+                    FINAL EVALUATION
+                </span>
+                <h2 class="text-xl font-bold">تقرير النتيجة والتقييم الأكاديمي النهائي</h2>
+                <div class="text-4xl md:text-5xl font-black font-code text-blue-600 dark:text-blue-400 py-2" id="final-score-text">0 / 20</div>
+                <p id="score-analysis" class="text-xs md:text-sm text-slate-600 dark:text-zinc-300 max-w-xl mx-auto leading-relaxed"></p>
+            </div>
+
+            <!-- Strengths and Weaknesses -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="academic-card rounded-xl p-5 border-t-4 border-t-emerald-600">
+                    <h3 class="font-bold text-emerald-600 dark:text-emerald-400 mb-3 flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-circle-check"></i> نقاط القوة (Strengths)
+                    </h3>
+                    <ul id="strengths-list" class="space-y-2 text-slate-700 dark:text-zinc-300"></ul>
+                </div>
+
+                <div class="academic-card rounded-xl p-5 border-t-4 border-t-rose-600">
+                    <h3 class="font-bold text-rose-600 dark:text-rose-400 mb-3 flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-triangle-exclamation"></i> نقاط الضعف والمراجعة (Weaknesses)
+                    </h3>
+                    <ul id="weaknesses-list" class="space-y-2 text-slate-700 dark:text-zinc-300"></ul>
+                </div>
+            </div>
+
+            <!-- Solution Review Section -->
+            <div class="academic-card rounded-xl p-6 space-y-4">
+                <h3 class="text-base font-bold border-b border-slate-200 dark:border-zinc-800 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-square-root-variable text-blue-600"></i>
+                    المراجعة التفصيلية والحلول النموذجية (Detailed English Solutions)
+                </h3>
+                <div id="solutions-review-container" class="space-y-4">
+                    <!-- Dynamic Answer Review Injected JS -->
+                </div>
+            </div>
+
+            <!-- Restart Action -->
+            <div class="text-center pt-2">
+                <button onclick="restartExam()" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow transition">
+                    <i class="fa-solid fa-rotate-right ml-1.5"></i> إعادة محاولة الاختبار
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="academic-card border-t py-3 px-6 text-center text-xs text-slate-500 dark:text-zinc-500">
+        جامعة سوهاج • كلية الهندسة •  الفرقة الاعدادية   • إشراف د. إسلام محمد الشيخ علي
+    </footer>
+
+    <script>
+        // Full dataset of 20 Engineering Physics II MCQs (In English)
+        const physicsExamQuestions = [
+            {
+                id: 1,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Easy",
+                question: "1. Why is prestressed concrete with embedded pre-tensioned steel rods widely used in structural engineering beams?",
+                options: [
+                    { id: "A", text: "Because concrete withstands tensile stress much better than compressive stress." },
+                    { id: "B", text: "Because concrete is weak under tension but exceptionally strong under compressive forces." },
+                    { id: "C", text: "To reduce the shear modulus of the civil structure down to zero." },
+                    { id: "D", text: "Because steel rods completely eliminate thermal expansion." }
+                ],
+                correctAnswer: "B",
+                explanation: "Concrete has a high ultimate compressive strength (~20 x 10^6 Pa) but very low tensile strength (~2 x 10^6 Pa). Pre-tensioned steel rods introduce pre-compression that balances tensile stresses under structural loads."
+            },
+            {
+                id: 2,
+                category: "Dimensional Analysis",
+                difficulty: "Medium",
+                question: "2. For uniform circular acceleration defined as a = k * r^n * v^m, what are the exponent values of n and m required for dimensional consistency?",
+                options: [
+                    { id: "A", text: "n = 1,  m = 1" },
+                    { id: "B", text: "n = -1,  m = 2" },
+                    { id: "C", text: "n = 2,  m = -1" },
+                    { id: "D", text: "n = -2,  m = 2" }
+                ],
+                correctAnswer: "B",
+                explanation: "Dimensions: [a] = L T^-2, [r] = L, [v] = L T^-1. Therefore: [L T^-2] = L^n * (L T^-1)^m = L^(n+m) * T^-m. Equating powers gives -m = -2 => m = 2, and n + m = 1 => n = -1. Hence, a = v^2 / r."
+            },
+            {
+                id: 3,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Easy",
+                question: "3. According to Hooke's Law, within the elastic limit of a solid material, stress is:",
+                options: [
+                    { id: "A", text: "Inversely proportional to strain." },
+                    { id: "B", text: "Directly proportional to strain." },
+                    { id: "C", text: "Independent of strain." },
+                    { id: "D", text: "Equal to force times area." }
+                ],
+                correctAnswer: "B",
+                explanation: "Hooke's Law states that within the elastic limit, Stress is directly proportional to Strain (Stress = Modulus of Elasticity * Strain)."
+            },
+            {
+                id: 4,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Easy",
+                question: "4. A wire of initial length L and cross-sectional area A stretches by ΔL under an applied axial force F. What is the expression for tensile strain?",
+                options: [
+                    { id: "A", text: "F / A" },
+                    { id: "B", text: "ΔL / L" },
+                    { id: "C", text: "L / ΔL" },
+                    { id: "D", text: "(F * L) / A" }
+                ],
+                correctAnswer: "B",
+                explanation: "Tensile strain (ε) is a dimensionless ratio defined as elongation divided by original length: ε = ΔL / L."
+            },
+            {
+                id: 5,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Medium",
+                question: "5. Which elastic modulus measures a material's resistance to change in volume under uniform hydraulic pressure?",
+                options: [
+                    { id: "A", text: "Young's Modulus" },
+                    { id: "B", text: "Shear Modulus" },
+                    { id: "C", "text": "Bulk Modulus" },
+                    { id: "D", "text": "Poisson's Ratio" }
+                ],
+                correctAnswer: "C",
+                explanation: "Bulk Modulus (B) relates uniform volume stress (pressure ΔP) to volumetric strain (-ΔV / V)."
+            },
+            {
+                id: 6,
+                category: "Units & Standards",
+                difficulty: "Easy",
+                question: "6. What are the SI base fundamental dimensions for Pressure?",
+                options: [
+                    { id: "A", text: "M L T^-2" },
+                    { id: "B", text: "M L^-1 T^-2" },
+                    { id: "C", text: "M L^2 T^-2" },
+                    { id: "D", text: "M L^-2 T^-1" }
+                ],
+                correctAnswer: "B",
+                explanation: "Pressure = Force / Area = (M L T^-2) / L^2 = M L^-1 T^-2."
+            },
+            {
+                id: 7,
+                category: "Units & Standards",
+                difficulty: "Easy",
+                question: "7. What is the standard SI unit of mechanical stress?",
+                options: [
+                    { id: "A", text: "Joule (J)" },
+                    { id: "B", text: "Pascal (Pa) or N/m²" },
+                    { id: "C", text: "Newton (N)" },
+                    { id: "D", text: "Watt (W)" }
+                ],
+                correctAnswer: "B",
+                explanation: "Stress is force per unit area (F/A), which in SI units is Newtons per square meter (N/m²) or Pascals (Pa)."
+            },
+            {
+                id: 8,
+                category: "Dimensional Analysis",
+                difficulty: "Medium",
+                question: "8. Which of the following physical quantities is completely dimensionless?",
+                options: [
+                    { id: "A", text: "Young's Modulus" },
+                    { id: "B", text: "Strain" },
+                    { id: "C", text: "Shear Stress" },
+                    { id: "D", text: "Surface Tension" }
+                ],
+                correctAnswer: "B",
+                explanation: "Strain is the ratio of two lengths (or two volumes), making its dimensions [M^0 L^0 T^0] (dimensionless)."
+            },
+            {
+                id: 9,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Medium",
+                question: "9. How is Poisson's Ratio (ν) mathematically defined for a stretched rod?",
+                options: [
+                    { id: "A", text: "Longitudinal Strain / Lateral Strain" },
+                    { id: "B", text: "- (Lateral Strain / Longitudinal Strain)" },
+                    { id: "C", text: "Volumetric Strain / Shear Strain" },
+                    { id: "D", text: "Tensile Stress / Longitudinal Strain" }
+                ],
+                correctAnswer: "B",
+                explanation: "Poisson's ratio is the negative ratio of transverse (lateral) strain to axial (longitudinal) strain."
+            },
+            {
+                id: 10,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Hard",
+                question: "10. What is the elastic potential energy stored per unit volume (energy density) in a stretched wire?",
+                options: [
+                    { id: "A", text: "Stress * Strain" },
+                    { id: "B", text: "0.5 * Stress * Strain" },
+                    { id: "C", text: "2 * Stress * Strain" },
+                    { id: "D", text: "0.5 * Force * Length" }
+                ],
+                correctAnswer: "B",
+                explanation: "Energy density u = (1/2) * Stress * Strain = (1/2) * Y * (Strain)^2."
+            },
+            {
+                id: 11,
+                category: "Dimensional Analysis",
+                difficulty: "Medium",
+                question: "11. What are the dimensional units for Mechanical Work and Energy?",
+                options: [
+                    { id: "A", text: "M L T^-1" },
+                    { id: "B", text: "M L^2 T^-2" },
+                    { id: "C", text: "M L^-1 T^-2" },
+                    { id: "D", text: "M L^2 T^-1" }
+                ],
+                correctAnswer: "B",
+                explanation: "Work = Force * Distance = (M L T^-2) * L = M L^2 T^-2."
+            },
+            {
+                id: 12,
+                category: "Units & Standards",
+                difficulty: "Easy",
+                question: "12. The tensile strength of a material is defined as the maximum:",
+                options: [
+                    { id: "A", text: "Strain the material can sustain before permanent deformation." },
+                    { id: "B", text: "Stress the material can withstand before fracture occurs." },
+                    { id: "C", text: "Energy density stored inside the lattice." },
+                    { id: "D", text: "Elastic modulus achieved under compression." }
+                ],
+                correctAnswer: "B",
+                explanation: "Tensile strength (Ultimate Tensile Strength) is the maximum stress a material can withstand before breaking."
+            },
+            {
+                id: 13,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Medium",
+                question: "13. Shear Modulus (G) measures the material's resistance against:",
+                options: [
+                    { id: "A", text: "Volumetric compression." },
+                    { id: "B", text: "Shape distortion and angular displacement." },
+                    { id: "C", text: "Thermal elongation." },
+                    { id: "D", text: "Linear axial tension." }
+                ],
+                correctAnswer: "B",
+                explanation: "Shear Modulus (Modulus of Rigidity) describes an object's resistance to shear deformation (change of shape at constant volume)."
+            },
+            {
+                id: 14,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Hard",
+                question: "14. If a steel wire of length L is cut into two equal halves, what happens to Young's Modulus (Y) of each half?",
+                options: [
+                    { id: "A", text: "Young's modulus is halved." },
+                    { id: "B", text: "Young's modulus is doubled." },
+                    { id: "C", text: "Young's modulus remains completely unchanged." },
+                    { id: "D", text: "Young's modulus quadruples." }
+                ],
+                correctAnswer: "C",
+                explanation: "Young's Modulus is an intrinsic intensive property of the material itself and does not depend on physical dimensions like length or diameter."
+            },
+            {
+                id: 15,
+                category: "Dimensional Analysis",
+                difficulty: "Hard",
+                question: "15. What are the dimensions of dynamic viscosity (η) derived from Stokes' or Viscous force law?",
+                options: [
+                    { id: "A", text: "M L^-1 T^-1" },
+                    { id: "B", text: "M L T^-2" },
+                    { id: "C", text: "M L^2 T^-1" },
+                    { id: "D", text: "M L^-2 T^-2" }
+                ],
+                correctAnswer: "A",
+                explanation: "F = η A (dv/dx) => [η] = [F] / ([A] * [dv/dx]) = (M L T^-2) / (L^2 * T^-1) = M L^-1 T^-1."
+            },
+            {
+                id: 16,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Easy",
+                question: "16. On a stress-strain diagram, the point beyond which plastic deformation occurs is called:",
+                options: [
+                    { id: "A", text: "Proportional Limit" },
+                    { id: "B", text: "Yield Point (Elastic Limit)" },
+                    { id: "C", text: "Fracture Point" },
+                    { id: "D", text: "Bulk Point" }
+                ],
+                correctAnswer: "B",
+                explanation: "Beyond the elastic limit (yield point), permanent (plastic) deformation occurs and the material will not return to its original length."
+            },
+            {
+                id: 17,
+                category: "Dimensional Analysis",
+                difficulty: "Medium",
+                question: "17. What are the dimensions of Power (Rate of doing work)?",
+                options: [
+                    { id: "A", text: "M L^2 T^-2" },
+                    { id: "B", text: "M L^2 T^-3" },
+                    { id: "C", text: "M L T^-3" },
+                    { id: "D", text: "M L^-1 T^-3" }
+                ],
+                correctAnswer: "B",
+                explanation: "Power = Work / Time = (M L^2 T^-2) / T = M L^2 T^-3."
+            },
+            {
+                id: 18,
+                category: "Elasticity & Materials Properties",
+                difficulty: "Hard",
+                question: "18. Two wires A and B are made of the same material. Wire A has twice the length and twice the diameter of Wire B. Under equal tensile force F, what is the ratio of elongation ΔL_A / ΔL_B?",
+                options: [
+                    { id: "A", text: "1 : 1" },
+                    { id: "B", text: "1 : 2" },
+                    { id: "C", text: "2 : 1" },
+                    { id: "D", text: "1 : 4" }
+                ],
+                correctAnswer: "B",
+                explanation: "ΔL = (F * L) / (A * Y) = (F * L) / (π * r^2 * Y). For Wire A: L_A = 2L, r_A = 2r => ΔL_A ∝ (2) / (2)^2 = 1/2. Thus ΔL_A / ΔL_B = 1/2."
+            },
+            {
+                id: 19,
+                category: "Units & Standards",
+                difficulty: "Easy",
+                question: "19. Shear Stress is mathematically expressed as:",
+                options: [
+                    { id: "A", text: "Tangential Force / Surface Area" },
+                    { id: "B", text: "Normal Force / Surface Area" },
+                    { id: "C", text: "Change in Volume / Initial Volume" },
+                    { id: "D", text: "Tensile Force / Wire Length" }
+                ],
+                correctAnswer: "A",
+                explanation: "Shear stress acts tangentially along the surface area: Shear Stress = Tangential Force / Parallel Area."
+            },
+            {
+                id: 20,
+                category: "Dimensional Analysis",
+                difficulty: "Hard",
+                question: "20. If Speed of Light c, Gravitational Constant G, and Planck's Constant h are fundamental dimensions, Planck Length scales as:",
+                options: [
+                    { id: "A", text: "sqrt( (G * h) / c^3 )" },
+                    { id: "B", text: "(G * h) / c^2" },
+                    { id: "C", text: "sqrt( c^3 / (G * h) )" },
+                    { id: "D", text: "(G * c) / h" }
+                ],
+                correctAnswer: "A",
+                explanation: "Planck Length l_p = sqrt( (hbar * G) / c^3 ) derived using dimensional analysis for length [L]."
+            }
+        ];
+
+        let currentIdx = 0;
+        let userAnswers = {};
+        let examTimer = null;
+        let secondsRemaining = 30 * 60; // 30 Minutes
+
+        // Theme Initialization
+        function initTheme() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.remove('light');
+                document.documentElement.classList.add('dark');
+                updateThemeIcon(true);
+            } else {
+                updateThemeIcon(false);
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                updateThemeIcon(false);
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                updateThemeIcon(true);
+            }
+        }
+
+        function updateThemeIcon(isDark) {
+            const icon = document.getElementById('theme-icon');
+            if (isDark) {
+                icon.className = 'fa-solid fa-sun text-amber-400 text-sm';
+            } else {
+                icon.className = 'fa-solid fa-moon text-slate-700 text-sm';
+            }
+        }
+
+        // Exam Flow
+        function startExam() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('exam-screen').classList.remove('hidden');
+            document.getElementById('header-timer').classList.remove('hidden');
+            document.getElementById('header-timer').classList.add('flex');
+
+            startCountdown();
+            renderStepper();
+            renderQuestion();
+        }
+
+        function startCountdown() {
+            examTimer = setInterval(() => {
+                secondsRemaining--;
+                const mins = Math.floor(secondsRemaining / 60).toString().padStart(2, '0');
+                const secs = (secondsRemaining % 60).toString().padStart(2, '0');
+                document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+
+                if (secondsRemaining <= 0) {
+                    clearInterval(examTimer);
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        function renderStepper() {
+            const grid = document.getElementById('stepper-grid');
+            grid.innerHTML = '';
+
+            physicsExamQuestions.forEach((q, idx) => {
+                const isAnswered = userAnswers[q.id] !== undefined;
+                const isCurrent = idx === currentIdx;
+
+                let btnClass = "w-8 h-8 rounded text-xs font-code font-bold transition flex items-center justify-center flex-shrink-0 border ";
+                
+                if (isCurrent) {
+                    btnClass += "bg-blue-600 text-white border-blue-600 ring-2 ring-blue-400/50";
+                } else if (isAnswered) {
+                    btnClass += "bg-emerald-600 text-white border-emerald-600";
+                } else {
+                    btnClass += "bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border-slate-300 dark:border-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-700";
+                }
+
+                grid.insertAdjacentHTML('beforeend', `
+                    <button onclick="jumpToQ(${idx})" class="${btnClass}">
+                        ${idx + 1}
+                    </button>
+                `);
+            });
+        }
+
+        function renderQuestion() {
+            const q = physicsExamQuestions[currentIdx];
+
+            document.getElementById('current-q-num').innerText = currentIdx + 1;
+            document.getElementById('q-category').innerText = q.category;
+            document.getElementById('q-difficulty').innerText = q.difficulty;
+            document.getElementById('q-text').innerText = q.question;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            q.options.forEach(opt => {
+                const isSelected = userAnswers[q.id] === opt.id;
+                container.insertAdjacentHTML('beforeend', `
+                    <div onclick="selectOption('${q.id}', '${opt.id}')" class="option-item ${isSelected ? 'selected' : ''} p-3.5 rounded-lg cursor-pointer flex items-center justify-between text-xs md:text-sm">
+                        <div class="flex items-center gap-3">
+                            <span class="w-7 h-7 rounded font-code font-bold flex items-center justify-center ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-200 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300'}">
+                                ${opt.id}
+                            </span>
+                            <span class="font-sans font-medium">${opt.text}</span>
+                        </div>
+                        <div class="w-4 h-4 rounded-full border border-slate-400 dark:border-zinc-500 flex items-center justify-center">
+                            ${isSelected ? '<div class="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400"></div>' : ''}
+                        </div>
+                    </div>
+                `);
+            });
+
+            // Navigation Button States
+            document.getElementById('prev-btn').disabled = currentIdx === 0;
+            document.getElementById('next-btn').disabled = currentIdx === physicsExamQuestions.length - 1;
+        }
+
+        function selectOption(qId, optId) {
+            userAnswers[qId] = optId;
+            renderStepper();
+            renderQuestion();
+        }
+
+        function jumpToQ(idx) {
+            currentIdx = idx;
+            renderStepper();
+            renderQuestion();
+        }
+
+        function navigateQ(dir) {
+            if (currentIdx + dir >= 0 && currentIdx + dir < physicsExamQuestions.length) {
+                currentIdx += dir;
+                renderStepper();
+                renderQuestion();
+            }
+        }
+
+        function submitExamPrompt() {
+            const answeredCount = Object.keys(userAnswers).length;
+            if (answeredCount < physicsExamQuestions.length) {
+                if (!confirm(`لقد أجبت على ${answeredCount} من 20 سؤالاً. هل أنت تأكد من تسليم الاختبار الآن؟`)) {
+                    return;
+                }
+            }
+            submitExam();
+        }
+
+        function submitExam() {
+            clearInterval(examTimer);
+            
+            document.getElementById('exam-screen').classList.add('hidden');
+            document.getElementById('header-timer').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            let totalScore = 0;
+            const categoryStats = {};
+
+            physicsExamQuestions.forEach(q => {
+                const userAns = userAnswers[q.id];
+                const isCorrect = userAns === q.correctAnswer;
+                
+                if (isCorrect) totalScore++;
+
+                if (!categoryStats[q.category]) {
+                    categoryStats[q.category] = { correct: 0, total: 0 };
+                }
+                categoryStats[q.category].total++;
+                if (isCorrect) categoryStats[q.category].correct++;
+            });
+
+            // Score Display
+            document.getElementById('final-score-text').innerText = `${totalScore} / 20`;
+            const badge = document.getElementById('score-badge');
+            const analysis = document.getElementById('score-analysis');
+
+            const scorePercent = (totalScore / 20) * 100;
+            if (scorePercent >= 85) {
+                badge.className = "inline-block px-3 py-1 rounded text-xs font-bold font-code bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800";
+                analysis.innerText = "أداء ممتاز جداً! أظهرت استيعاباً كاملاً لمفاهيم الفيزياء الهندسية والمرونة والتحليل البُعدي المطابقة لمعايير المنهج.";
+            } else if (scorePercent >= 65) {
+                badge.className = "inline-block px-3 py-1 rounded text-xs font-bold font-code bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-400 border border-blue-300 dark:border-blue-800";
+                analysis.innerText = "أداء جيد جداً! لديك خلفية استيعاب قوية، يرجى مراجعة المواضيع التي حدثت بها أخطاء للحصول على الدرجة النهائيا.";
+            } else {
+                badge.className = "inline-block px-3 py-1 rounded text-xs font-bold font-code bg-rose-100 dark:bg-rose-950/80 text-rose-700 dark:text-rose-400 border border-rose-300 dark:border-rose-800";
+                analysis.innerText = "تحتاج إلى مراجعة إضافية لمواضيع المرونة وإجهادات المواد والتحليل البُعدي. راجع التفسيرات والخطوات الهندسية أدناه.";
+            }
+
+            // Render Strengths and Weaknesses
+            const strList = document.getElementById('strengths-list');
+            const weakList = document.getElementById('weaknesses-list');
+            strList.innerHTML = '';
+            weakList.innerHTML = '';
+
+            for (const [cat, data] of Object.entries(categoryStats)) {
+                const ratio = data.correct / data.total;
+                if (ratio >= 0.75) {
+                    strList.insertAdjacentHTML('beforeend', `
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-check text-emerald-600 dark:text-emerald-400"></i>
+                            <span><strong>${cat}:</strong> تم إتقان ${data.correct} من ${data.total} أسئلة</span>
+                        </li>
+                    `);
+                } else {
+                    weakList.insertAdjacentHTML('beforeend', `
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-xmark text-rose-600 dark:text-rose-400"></i>
+                            <span><strong>${cat}:</strong> بحاجة لمراجعة (${data.correct} من ${data.total} صحيح)</span>
+                        </li>
+                    `);
+                }
+            }
+
+            if (!strList.innerHTML) strList.innerHTML = '<li class="text-slate-500">لا توجد نقاط قوة مكتملة، يوصى بإعادة المذاكرة.</li>';
+            if (!weakList.innerHTML) weakList.innerHTML = '<li class="text-emerald-600 dark:text-emerald-400 font-bold">ممتاز! لا توجد نقاط ضعف، لقد أجبت بشكل متميز.</li>';
+
+            // Detailed Solutions Review Rendering
+            const solContainer = document.getElementById('solutions-review-container');
+            solContainer.innerHTML = '';
+
+            physicsExamQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[q.id];
+                const isCorrect = userAns === q.correctAnswer;
+                const userOpt = q.options.find(o => o.id === userAns);
+                const correctOpt = q.options.find(o => o.id === q.correctAnswer);
+
+                solContainer.insertAdjacentHTML('beforeend', `
+                    <div class="p-4 rounded-lg border ${isCorrect ? 'border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-emerald-950/10' : 'border-rose-200 dark:border-rose-900/60 bg-rose-50/40 dark:bg-rose-950/10'} text-xs space-y-3">
+                        <div class="flex justify-between items-center border-b pb-2 border-slate-200 dark:border-zinc-800">
+                            <span class="font-bold text-slate-800 dark:text-zinc-200">Question ${idx + 1} (${q.category})</span>
+                            <span class="font-bold font-code ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
+                                ${isCorrect ? 'Correct ✓' : 'Incorrect ✗'}
+                            </span>
+                        </div>
+                        <p class="font-code font-semibold text-slate-900 dark:text-zinc-100 dir-ltr text-left">${q.question}</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1 dir-ltr text-left">
+                            <div class="p-2.5 rounded bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800">
+                                <span class="text-slate-400 block mb-0.5 text-[11px]">Your Selected Answer:</span>
+                                <span class="${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'} font-bold">
+                                    ${userOpt ? `${userOpt.id}: ${userOpt.text}` : 'Not Answered'}
+                                </span>
+                            </div>
+                            <div class="p-2.5 rounded bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800">
+                                <span class="text-slate-400 block mb-0.5 text-[11px]">Correct Answer:</span>
+                                <span class="text-emerald-600 dark:text-emerald-400 font-bold">
+                                    ${correctOpt.id}: ${correctOpt.text}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-slate-100 dark:bg-zinc-900 rounded border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 dir-ltr text-left leading-relaxed font-code">
+                            <strong class="text-blue-600 dark:text-blue-400 block mb-1">Explanation:</strong>
+                            ${q.explanation}
+                        </div>
+                    </div>
+                `);
+            });
+        }
+
+        function restartExam() {
+            currentIdx = 0;
+            userAnswers = {};
+            secondsRemaining = 30 * 60;
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+
+        // Initialize on Load
+        window.onload = function() {
+            initTheme();
+        };
+    </script>
+</body>
+</html>
